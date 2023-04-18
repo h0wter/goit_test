@@ -25,7 +25,6 @@ export const UserCard = ({ user, handleFollowUser, followedUsers }) => {
       ...user,
       followers: shouldIncrement ? followersCount + 1 : followersCount - 1,
     });
-    console.log(result);
     setIsFollowed(shouldIncrement);
     setFollowersCount(
       shouldIncrement ? followersCount + 1 : followersCount - 1

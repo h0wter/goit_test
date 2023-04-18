@@ -3,9 +3,9 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { LoadingLabel } from "./components/LoadingLabel/LoadingLabel.styled";
 import "./App.css";
 
-const HomePage = lazy(() => import("./pages/Home"));
-const TweetsPage = lazy(() => import("./pages/Tweets"));
-//TODO favicon + nazvanie vkladki
+const HomePage = lazy(() => import("./pages/Home/Home"));
+const TweetsPage = lazy(() => import("./pages/Tweets/Tweets"));
+
 function App() {
   return (
     <Suspense fallback={<LoadingLabel>Loading...</LoadingLabel>}>

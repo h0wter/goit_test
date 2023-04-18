@@ -5,4 +5,8 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   base: "/goit_test/",
   plugins: [react()],
+  server: {
+    errorOverlay: true,
+    clearScreen: false,
+  },
 });

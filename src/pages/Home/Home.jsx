@@ -1,4 +1,4 @@
-import { LinkButton } from "../components/LinkButton/LinkButton.styled";
+import { LinkButton } from "../../components/LinkButton/LinkButton.styled";
 import { Container } from "./Home.styled";
 
 const HomePage = () => {

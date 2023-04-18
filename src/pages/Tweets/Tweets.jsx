@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { UserCard } from "../components/UserCard/UserCard";
-import { getUsers } from "../services/api";
-import { TweetsList, LoadMoreBtn, LoadingLabel } from "./Tweets.styled";
-import { LinkButton } from "../components/LinkButton/LinkButton.styled";
+import { UserCard } from "../../components/UserCard/UserCard";
+import { getUsers } from "../../services/api";
+import { TweetsList, LoadMoreBtn } from "./Tweets.styled";
+import { LinkButton } from "../../components/LinkButton/LinkButton.styled";
 
 const TweetsPage = () => {
   const [users, setUsers] = useState([]);

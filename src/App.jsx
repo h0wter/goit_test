@@ -1,6 +1,6 @@
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import { LoadingLabel } from "./pages/Tweets.styled";
+import { LoadingLabel } from "./components/LoadingLabel/LoadingLabel.styled";
 import "./App.css";
 
 const HomePage = lazy(() => import("./pages/Home"));

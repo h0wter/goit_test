@@ -2,9 +2,9 @@ import axios from "axios";
 
 axios.defaults.baseURL = "https://639cc16116d1763ab1536f6f.mockapi.io/api/v1";
 
-export const getUsers = async (page, limit) => {
+export const getUsers = async () => {
   try {
-    const response = await axios.get(`/users?page=${page}&limit=9`);
+    const response = await axios.get(`/users`);
     return response.data;
   } catch (error) {
     console.log(error);

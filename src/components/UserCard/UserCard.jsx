@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { updateUserData } from "../../services/api";
 import {
   AvatarWrapper,
   Avatar,
@@ -15,21 +14,13 @@ import logo from "../../assets/Logo.png";
 
 export const UserCard = ({ user, handleFollowUser, followedUsers }) => {
   const { id, tweets, followers, avatar } = user;
-  const [followersCount, setFollowersCount] = useState(followers);
-  const [isFollowed, setIsFollowed] = useState(followedUsers.includes(id));
-  const count = followersCount.toLocaleString("en-US");
+  const isFollowed = followedUsers.includes(id);
+  const count = followers.toLocaleString("en-US");
 
   const onFollowBtn = async () => {
-    const shouldIncrement = !isFollowed; // Состояние обновляется на следующем рендере и !isFollowed возвращает следующее состоянии компонента, показывая подписался человек или отписался.
-    const result = await updateUserData(id, {
-      ...user,
-      followers: shouldIncrement ? followersCount + 1 : followersCount - 1,
-    });
-    setIsFollowed(shouldIncrement);
-    setFollowersCount(
-      shouldIncrement ? followersCount + 1 : followersCount - 1
-    );
-    handleFollowUser(id, shouldIncrement);
+    handleFollowUser(user, !isFollowed);
+    // Состояние обновляется на следующем рендере и !isFollowed возвращает
+    // следующее состоянии компонента, показывая подписался человек или отписался.
   };
 
   return (

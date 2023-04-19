@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { getUsers, updateUserData } from "../../services/api";
 import { Dropdown } from "../../components/Dropdown/Dropdown";
 import { TweetsList } from "../../components/TweetsList/TweetsList";
@@ -40,15 +40,15 @@ const TweetsPage = () => {
       )
     );
 
-    toggleFollow(id, shouldFollow);
+    handleToggleFollow(id, shouldFollow);
   };
 
-  const toggleFollow = (id, shouldFollow) => {
-    if (shouldFollow) {
-      setFollowedUsers([...followedUsers, id]);
-    } else {
-      setFollowedUsers([...followedUsers.filter((userId) => userId !== id)]);
-    }
+  const handleToggleFollow = (id, shouldFollow) => {
+    setFollowedUsers((prevFollowedUsers) =>
+      shouldFollow
+        ? [...prevFollowedUsers, id]
+        : [...prevFollowedUsers.filter((userId) => userId !== id)]
+    );
   };
 
   const handleFilter = (option) => {
@@ -57,7 +57,19 @@ const TweetsPage = () => {
     setUsersToShow([]);
   };
 
-  const getFilteredUsers = () => {
+  // const getFilteredUsers = () => {
+  //   if (filterOption === "all") {
+  //     return users;
+  //   }
+
+  //   return users.filter((user) => {
+  //     return filterOption === "following"
+  //       ? followedUsers.includes(user.id)
+  //       : !followedUsers.includes(user.id);
+  //   });
+  // };
+
+  const getFilteredUsers = useMemo(() => {
     if (filterOption === "all") {
       return users;
     }
@@ -67,18 +79,14 @@ const TweetsPage = () => {
         ? followedUsers.includes(user.id)
         : !followedUsers.includes(user.id);
     });
-  };
+  }, [filterOption, users, followedUsers]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await getUsers();
-      setUsers([...result]);
-    };
-    fetchData();
+    getUsers().then((result) => setUsers([...result]));
   }, []);
 
   useEffect(() => {
-    const users = [...getFilteredUsers().slice(0, 9 * currentPage)];
+    const users = [...getFilteredUsers.slice(0, 9 * currentPage)];
     setUsersToShow(users);
   }, [currentPage, users, filterOption]); //users добавлены в зависимости, чтобы useEffect сработал после первого рендера, когда данные с api попадают в массив.
 
@@ -86,7 +94,7 @@ const TweetsPage = () => {
     localStorage.setItem("followedUsers", JSON.stringify(followedUsers));
   }, [followedUsers]);
 
-  if (usersToShow.length > 0) {
+  if (users.length > 0) {
     return (
       <>
         <LinkButton to="/">Go back</LinkButton>
@@ -99,13 +107,15 @@ const TweetsPage = () => {
           followedUsers={followedUsers}
           handleFollowUser={handleFollowUser}
         />
-        <LoadMoreBtn
-          onClick={() => {
-            setCurrentPage(currentPage + 1);
-          }}
-        >
-          Load More
-        </LoadMoreBtn>
+        {usersToShow.length > 0 && usersToShow.length < users.length ? (
+          <LoadMoreBtn
+            onClick={() => {
+              setCurrentPage(currentPage + 1);
+            }}
+          >
+            Load More
+          </LoadMoreBtn>
+        ) : null}
       </>
     );
   }

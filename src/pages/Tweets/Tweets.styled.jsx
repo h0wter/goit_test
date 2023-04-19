@@ -1,12 +1,5 @@
 import styled from "styled-components";
 
-export const TweetsList = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(3, 380px);
-  gap: 30px 30px;
-  margin-bottom: 30px;
-`;
-
 export const LoadMoreBtn = styled.button`
   display: block;
   padding: 14px 28px;
